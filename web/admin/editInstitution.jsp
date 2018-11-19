@@ -14,9 +14,9 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="#">Instituições</a>
                     </li>
-                    <li class="breadcrumb-item active">Charts</li>
+                    <li class="breadcrumb-item active">Editar</li>
                 </ol>
 
 
@@ -115,10 +115,10 @@
                         
                     <div class="form-row">
                         <div class="form-group col-md-12">
-                            <label for="pais">*País:</label>
+                            <label for="pais">*Descrição</label>
                             <textarea rows="10" type="text" class="form-control" name="descricao" id="descricao"><%=i.getDescricao()%></textarea>
                         </div>
-                    </div
+                    </div>
                     <div class="form-row">
                         <div class="form-group col-md-6">
                             <button type="submit" class="btn btn-success">Atualizar</button><br>

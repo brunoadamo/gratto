@@ -22,9 +22,9 @@
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
+                        <a href="#">Instituições</a>
                     </li>
-                    <li class="breadcrumb-item active">Charts</li>
+                    <li class="breadcrumb-item active">Adicionar</li>
                 </ol>
                 
                 <h2>Cadastro de Instituição</h2>
@@ -109,6 +109,12 @@
                         <div class="form-group col-md-6">
                             <label for="pais">*País:</label>
                             <input type="text" class="form-control" name="pais" id="pais">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group col-md-12">
+                            <label for="pais">*Descrição</label>
+                            <textarea rows="10" type="text" class="form-control" name="descricao" id="descricao"></textarea>
                         </div>
                     </div>
                     <div class="form-row">

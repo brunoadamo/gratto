@@ -11,15 +11,12 @@
             <div class="container-fluid">
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item">
-                        <a href="#">Dashboard</a>
-                    </li>
-                    <li class="breadcrumb-item active">Charts</li>
+                    <li class="breadcrumb-item active">Relação geral</li>
                 </ol>
                 <!-- Area Chart Example-->
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-area-chart"></i> Area Chart Example</div>
+                        <i class="fa fa-area-chart"></i> Gráfico de doações</div>
                     <div class="card-body">
                         <canvas id="myAreaChart" width="100%" height="30"></canvas>
                     </div>
@@ -30,7 +27,7 @@
                         <!-- Example Bar Chart Card-->
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-bar-chart"></i> Bar Chart Example</div>
+                                <i class="fa fa-bar-chart"></i> Minhas doações</div>
                             <div class="card-body">
                                 <canvas id="myBarChart" width="100" height="50"></canvas>
                             </div>
@@ -41,7 +38,7 @@
                         <!-- Example Pie Chart Card-->
                         <div class="card mb-3">
                             <div class="card-header">
-                                <i class="fa fa-pie-chart"></i> Pie Chart Example</div>
+                                <i class="fa fa-pie-chart"></i> Doações gerais</div>
                             <div class="card-body">
                                 <canvas id="myPieChart" width="100%" height="100"></canvas>
                             </div>

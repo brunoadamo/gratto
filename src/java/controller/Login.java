@@ -49,15 +49,16 @@ public class Login extends HttpServlet {
 
             HttpSession session = request.getSession();
 
-            session.setAttribute("usuarioNome", false);
-            session.setAttribute("usuarioID", false);
+            session.setAttribute("usuarioNome", "");
+            session.setAttribute("usuarioID", "");
 
-            if (usuarioDAO.login()) {
-                session.setAttribute("userLogin", "false");
+            if (usuarioDAO.login() == true) {
+                
                 session.setAttribute("usuarioNome", usuarioDAO.usuario.getNomeUsuario());
                 session.setAttribute("usuarioID", usuarioDAO.usuario.getIdUsuario());
                 response.sendRedirect("index.jsp");
             } else {
+                session.setAttribute("userLogin", "false");
                 response.sendRedirect("index.jsp");
             }
 

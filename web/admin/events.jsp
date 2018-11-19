@@ -1,5 +1,4 @@
-<%@page import="model.Doacao"%>
-<%@page import="model.DoacaoDAO"%>
+<%@page import="model.Instituicao"%>
 <%@page import="model.InstituicaoDAO"%>
 <%@page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
@@ -18,23 +17,18 @@
                 
             <!-- Breadcrumbs-->
             <ol class="breadcrumb">
-                <li class="breadcrumb-item">
-                    <a href="#">Dashboard</a>
-                </li>
-                <li class="breadcrumb-item active">Charts</li>
+                <li class="breadcrumb-item active">Eventos</li>
             </ol>
 
         <%
             
         String cod_usuario = session.getAttribute("usuarioID").toString();
-        
-        DoacaoDAO dDAO = new DoacaoDAO();
-        
+
         InstituicaoDAO iDAO = new InstituicaoDAO();
 
-        List<Doacao> listDoacao = dDAO.localizar(cod_usuario);
+        List<Instituicao> listInstituicao = iDAO.listaCod(cod_usuario);
 
-        request.setAttribute("listDoacao",listDoacao);
+        request.setAttribute("listInstituicao",listInstituicao);
 
         %>
 
@@ -49,19 +43,19 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Data</th>
                                         <th>Nome</th>
+                                        <th>Telefone</th>
                                         <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% //INICIO DA LISTAGEM DE INSTITUIÇÕES %>
-                                    <c:forEach items="${listDoacao}" var="i">
+                                    <c:forEach items="${listInstituicao}" var="i">
                                   
                                         <tr>
-                                            <td>${i.getCodigo()}</td>
-                                            <td>${i.getData()}</td>
-                                            <td>${i.getValor()}</td>
+                                            <td>${i.getIdInstituicao()}</td>
+                                            <td>${i.getNomeFantasia()}</td>
+                                            <td>${i.getTelefoneInstituicao()}</td>
                                             <td class="actions">
                                                 <!-- <a class="btn btn-success btn-xs" href="view.html">Visualizar</a> !-->
                                                 <a class="btn btn-success btn-xs" href="donationsInstitutions.jsp?id=">Participantes</a>
