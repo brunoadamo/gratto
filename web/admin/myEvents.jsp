@@ -1,6 +1,5 @@
-<%@page import="model.Doacao"%>
-<%@page import="model.DoacaoDAO"%>
-<%@page import="model.InstituicaoDAO"%>
+<%@page import="model.Evento"%>
+<%@page import="model.EventoDAO"%>
 <%@page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -15,22 +14,21 @@
 
         <div class="content-wrapper">
             <div class="container-fluid">
+
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active">Minhas Doações</li>
+                    <li class="breadcrumb-item active">Eventos</li>
                 </ol>
 
                 <%
 
                 String cod_usuario = session.getAttribute("usuarioID").toString();
 
-                DoacaoDAO dDAO = new DoacaoDAO();
+                EventoDAO iDAO = new EventoDAO();
 
-                InstituicaoDAO iDAO = new InstituicaoDAO();
+                List<Evento> listEvento = iDAO.listaParticipacao(cod_usuario);
 
-                List<Doacao> listDoacao = dDAO.localizar(cod_usuario);
-
-                request.setAttribute("listDoacao",listDoacao);
+                request.setAttribute("listEvento",listEvento);
 
                 %>
 
@@ -38,27 +36,30 @@
                 <!-- Example DataTables Card-->
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table"></i> Doações</div>
+                        <i class="fa fa-table"></i> Meus eventos</div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" cellspacing="0">
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Data</th>
-                                        <th>Valor</th>
-                                        <th>Instituição</th>
+                                        <th>Nome</th>
+                                        <th>Data e Horário</th>
+                                        <th>Ações</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% //INICIO DA LISTAGEM DE INSTITUIÇÕES %>
-                                    <c:forEach items="${listDoacao}" var="i">
+                                    <c:forEach items="${listEvento}" var="i">
 
                                         <tr>
-                                            <td>${i.getCodigo()}</td>
-                                            <td>${i.getData()}</td>
-                                            <td>${i.getValor()}</td>
-                                            <td>${i.getCod_inst()}</td>
+                                            <td>${i.getNome()}</td>
+                                            <td>${i.getDesc()}</td>
+                                            <td>${i.getDataIni()} às ${i.getHoraIni()}h</td>
+                                            <td class="actions">
+                                                <!-- <a class="btn btn-success btn-xs" href="view.html">Visualizar</a> !-->
+                                                <a class="btn btn-danger btn-xs"  href="../myEvents?id=${i.getIdEvento()}">Cancelar Participacao</a>
+                                            </td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>

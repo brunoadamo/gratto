@@ -38,38 +38,45 @@ public class DoacaoServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             HttpSession session = request.getSession();
-            
-            
-            
-            double valor = Double.parseDouble(request.getParameter("valor_doacao"));
-            int id_instituicao = Integer.parseInt(request.getParameter("id_instituicao"));
-            int id_usuario = Integer.parseInt(request.getParameter("id_usuario"));
+            double valor = 0;
+            int id_instituicao = 0;
+            int id_usuario = 0;
+
+            valor = Double.parseDouble(request.getParameter("valor_doacao"));
+            id_instituicao = Integer.parseInt(request.getParameter("id_instituicao"));
+
+            try {
+
+                id_usuario = Integer.parseInt(request.getParameter("id_usuario"));
+            } catch (NumberFormatException e) {
+
+            }
             Date d = new Date();
             String data = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(d);
-            
+
             System.out.println(request.getParameter("id_instituicao") + " AQUIIIIIIIIII");
             System.out.println(id_instituicao);
             System.out.println(id_usuario);
             System.out.println(valor);
             System.out.println(data);
-            		
-            Doacao doacao = new Doacao();            
-                       
+
+            Doacao doacao = new Doacao();
+
             DoacaoDAO doacaoDAO = new DoacaoDAO();
-            if(!doacaoDAO.bd.getConnection()) {
+            if (!doacaoDAO.bd.getConnection()) {
                 System.out.println("Falha na conexão com o Banco de Dados.");
                 System.exit(0);
             }
-            
+
             doacao.setCod_usuario(id_usuario);
             doacao.setValor(valor);
-            doacao.setCod_inst(id_usuario);
+            doacao.setCod_inst(id_instituicao);
             doacao.setData(data);
-                        
-            if(doacaoDAO.gravar(doacao)) {                
-                response.sendRedirect("institution.jsp?idInstituicao=" + id_instituicao);
-            } else{
-                response.sendRedirect("institution.jsp?idInstituicao=" + id_instituicao);
+
+            if (doacaoDAO.gravar(doacao)) {
+                response.sendRedirect("thanks.jsp");
+            } else {
+                response.sendRedirect("thanks.jsp");
             }
         }
     }

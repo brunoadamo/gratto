@@ -1,182 +1,133 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package model;
+
+import java.sql.SQLException;
+import java.util.List;
+import service.BD;
 
 /**
  *
- * @author MaickHenriquePereira
+ * @author Bruno
  */
-
-import service.BD;
-import java.sql.SQLException;
-
 public class ParticipacaoDAO {
-	
-	private BD bd;
-	
-	public ParticipacaoDAO() {
-		bd.getConnection();
-	}
 
-	/**
-	 * Grava uma Foto na Base de Dados
-	 * @param foto foto recebe um objeto do tipo Foto
-	 * @return retorna 
-	 */
-	public String gravar(Foto foto) {
+    public Participacao participacao;
+    public BD bd;
 
-		String sql = "INSERT INTO foto VALUES (?,?,?,?,?)";
+    public ParticipacaoDAO() {
+        bd = new BD();
+        participacao = new Participacao();
+    }
 
-		try {
-			
-			bd.getConnection();
-			
-			bd.st = bd.con.prepareStatement(sql);
-			//bd.st.setInt(1, usuario.getIdFoto());
-			bd.st.setString(1, foto.getNomeFoto());
-			bd.st.setString(2, foto.getDescricaoFoto());
-			int n = bd.st.executeUpdate();
-			return "Foto salva com sucesso";
+    public boolean gravar(Participacao participacao) {
 
+        String sql = "INSERT INTO participacao (Data_Inscricao, Cod_Usuario, Cod_Evento, Cod_Instituicao) VALUES (?,?,?,?)";
 
-		} catch (SQLException e) {
-			return "Falha ao salvar a foto" + e;
-		}
-	}
-	
-	/**
-	 * Exclu� uma Foto
-	 * @param codigo recebe o c�digo da foto que ser� exclu�da
-	 * @return Retorna a mensagem com o status da opera��o 
-	 */
-	public String excluir(int codigo){
-		
-		String sql = "DELETE FROM foto where IDFoto = ?;";
-		
-		try {
-			bd.getConnection();
-			bd.st = bd.con.prepareStatement(sql);
-			bd.st.setInt(1, codigo);
-			int n = bd.st.executeUpdate();
-			
-		} catch (SQLException erro) {
-			return erro.toString();
-			
-		}
-		finally {
-			bd.close();
-		}
-		
-		return "Foto exlu�da com sucesso";
-	}
-	
-	/**
-	 * ALtera uma Foto
-	 * @param foto recebe um objeto do tipo Foto
-	 * @return retorna uma mensagem de acordo com as regras definidas
-	 */
-	public String atualizar(Foto foto){
-		
-		String sql = "UPDATE foto SET NomeFoto = ?, DescricaoFoto = ?, caminho = ?, EmailUsuario = ?, DataPublicacao = ?, PhotoActive = ?,"
-                        + " WHERE IDFoto = ?;";
-		
-		try {
-			bd.getConnection();
-			
-			bd.getConnection();
-			bd.st = bd.con.prepareStatement(sql);
-			bd.st.setString(1, foto.getNomeFoto());
-			bd.st.setString(2, foto.getDescricaoFoto());
-			bd.st.setString(3, foto.getCaminho());
-			bd.st.setString(4, foto.getDataPublicacao());
-                        bd.st.setBoolean(5, foto.isPhotoActive());
-			
-			int n = bd.st.executeUpdate();
-			
-			return "Foto Alterada";
-			
-			
-		} catch (SQLException erro) {
-			System.out.println(erro.toString());
-			return "Falha ao alterar a Foto";
-			
-		}
-	}
-	
-	/**
-	 * Localiza uma Foto utilizando o c�digo
-	 * @param codigo codigo da Foto a ser buscada
-	 * @return retorna a Foto preenchida
-	 */
-	public Foto localizar(int codigo) {
-		
-		Foto foto = new Foto();
-		String sql = "SELECT * FROM foto WHERE IDFoto = ?";
-		
-		try {
-			bd.getConnection();
-			bd.st = bd.con.prepareStatement(sql);
-			bd.st.setInt(1, codigo);
-			bd.rs = bd.st.executeQuery();
-			if(bd.rs.next()){
-				
-                        bd.st.setString(1, foto.getNomeFoto());
-			bd.st.setString(2, foto.getDescricaoFoto());
-			bd.st.setString(3, foto.getCaminho());
-			bd.st.setString(4, foto.getDataPublicacao());
-                        bd.st.setBoolean(5, foto.isPhotoActive());
-				
-				return foto;
-			}else{
-				return null;
-			}
-			
-			
-		} catch (SQLException erro) {
-			System.out.println(erro.toString());
-			return null;
-			
-		}
-		finally {
-			bd.close();
-		}
-	}
-	
-	/**
-	 * Localiza uma Foto utilizando o nome da Foto
-	 * @param codigo codigo da Foto a ser buscada
-	 * @return retorna a Foto preenchida
-	 */
-	public Foto localizar(String nome) {
-		
-		Foto foto = new Foto();
-		String sql = "SELECT * FROM foto WHERE NomeFoto LIKE '%?%'";
-		
-		try {
-			bd.getConnection();
-			bd.st = bd.con.prepareStatement(sql);
-			bd.st.setString(1, nome);
-			bd.rs = bd.st.executeQuery();
-			if(bd.rs.next()){
-				
-				bd.st.setString(1, foto.getNomeFoto());
-			bd.st.setString(2, foto.getDescricaoFoto());
-			bd.st.setString(3, foto.getCaminho());
-			bd.st.setString(4, foto.getDataPublicacao());
-                        bd.st.setBoolean(5, foto.isPhotoActive());
-				
-				return foto;
-			}else{
-				return null;
-			}
-			
-			
-		} catch (SQLException erro) {
-			System.out.println(erro.toString());
-			return null;
-			
-		}
-		finally {
-			bd.close();
-		}
-	}
+        try {
+
+            bd.getConnection();
+            bd.st = bd.con.prepareStatement(sql);
+            bd.st.setString(1, participacao.getDataInsc());
+            bd.st.setDouble(2, participacao.getCod_usuario());
+            bd.st.setInt(3, participacao.getCod_evento());
+            bd.st.setInt(4, participacao.getCod_instituicao());
+            //bd.st.setBoolean(17, instituicao.instIsActive());
+
+            int n = bd.st.executeUpdate();
+            return true;
+
+        } catch (SQLException e) {
+            System.out.println("Falha ao salvar a Participacao" + e);
+            return false;
+        }
+    }
+
+    /**
+     * Exclu� uma Instituicao
+     *
+     * @param codigo recebe o c�digo da Instituicao que ser� exclu�da
+     * @return Retorna a mensagem com o status da opera��o
+     */
+    public boolean excluir(int codigo) {
+
+        String sql = "DELETE FROM participacao where Codigo = ?;";
+
+        try {
+            bd.getConnection();
+            bd.st = bd.con.prepareStatement(sql);
+            bd.st.setInt(1, codigo);
+            int n = bd.st.executeUpdate();
+
+        } catch (SQLException erro) {
+            return false;
+
+        } finally {
+            bd.close();
+        }
+
+        return true;
+    }
+
+    public List<Doacao> localizar(String codigo) {
+
+        List<Doacao> list = new java.util.ArrayList<Doacao>();
+
+        String sql = "SELECT * FROM doacao WHERE Cod_Usuario = '" + codigo + "'";
+
+        try {
+            bd.getConnection();
+            bd.st = bd.con.prepareStatement(sql);
+            bd.rs = bd.st.executeQuery();
+
+            while (bd.rs.next()) {
+
+                Doacao d = new Doacao();
+                d.setCodigo(bd.rs.getInt("Codigo"));
+                d.setCod_inst(bd.rs.getInt("Cod_Inst"));
+                d.setCod_usuario(bd.rs.getInt("Cod_Usuario"));
+                d.setValor(bd.rs.getDouble("Valor"));
+                d.setData(bd.rs.getString("Data"));
+
+                list.add(d);
+            }
+        } catch (SQLException erro) {
+            System.out.println("Erro: " + erro.toString());
+        }
+        return list;
+    }
+
+    public List<Doacao> localizarInsDoacao(String codigoInst) {
+
+        List<Doacao> list = new java.util.ArrayList<Doacao>();
+
+        String sql = "SELECT * FROM doacao WHERE Cod_Inst = '" + codigoInst + "'";
+
+        System.out.println(sql);
+
+        try {
+            bd.getConnection();
+            bd.st = bd.con.prepareStatement(sql);
+            bd.rs = bd.st.executeQuery();
+
+            while (bd.rs.next()) {
+
+                Doacao d = new Doacao();
+                d.setCodigo(bd.rs.getInt("Codigo"));
+                d.setCod_inst(bd.rs.getInt("Cod_Inst"));
+                d.setCod_usuario(bd.rs.getInt("Cod_Usuario"));
+                d.setValor(bd.rs.getDouble("Valor"));
+                d.setData(bd.rs.getString("Data"));
+
+                list.add(d);
+            }
+        } catch (SQLException erro) {
+            System.out.println("Erro: " + erro.toString());
+        }
+        return list;
+    }
+
 }
-

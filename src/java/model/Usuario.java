@@ -10,16 +10,16 @@ package model;
  * @author MaickHenriquePereira
  */
 public class Usuario {
-    
+
     private int idUsuario;
     private String nomeUsuario;
     private String dataNascimento;
     private String telefoneUsuario;
     private String emailUsuario;
     private String senha;
-    private String sexo;    
+    private String sexo;
     private String cidadeUsuario;
-    private boolean userActive;    
+    private boolean userActive;
     private String dataCriacaoUsuario;
     private String estadoUsuario;
 
@@ -126,9 +126,5 @@ public class Usuario {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-	
-
-
-
 
 }

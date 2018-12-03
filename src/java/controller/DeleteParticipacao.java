@@ -12,15 +12,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.UsuarioDAO;
+import model.ParticipacaoDAO;
 
 /**
  *
- * @author Bruno
+ * @author bruno
  */
-public class Login extends HttpServlet {
+public class DeleteParticipacao extends HttpServlet {
 
     /**
+     * /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -31,37 +32,24 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("text/html;charset=UTF-8");
-
         try (PrintWriter out = response.getWriter()) {
-            String email = request.getParameter("email_user");
-            String senha = request.getParameter("pass_user");
+            HttpSession session = request.getSession();
 
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            if (!usuarioDAO.bd.getConnection()) {
-                out.println("Falha na conexão com o Banco de Dados.");
+            int codigo = Integer.parseInt(request.getParameter("id"));
+
+            ParticipacaoDAO participacaoDAO = new ParticipacaoDAO();
+            if (!participacaoDAO.bd.getConnection()) {
+                System.out.println("Falha na conexão com o Banco de Dados.");
                 System.exit(0);
             }
 
-            usuarioDAO.usuario.setEmailUsuario(email);
-            usuarioDAO.usuario.setSenha(senha);
+            if (participacaoDAO.excluir(codigo)) {
 
-            HttpSession session = request.getSession();
-
-            session.setAttribute("usuarioNome", "");
-            session.setAttribute("usuarioID", "");
-
-            if (usuarioDAO.login() == true) {
-
-                session.setAttribute("usuarioNome", usuarioDAO.usuario.getNomeUsuario());
-                session.setAttribute("usuarioID", usuarioDAO.usuario.getIdUsuario());
-                response.sendRedirect("index.jsp");
+                response.sendRedirect("admin/events.jsp");
             } else {
-                session.setAttribute("userLogin", "false");
-                response.sendRedirect("thanks.jsp?msg=Ocorreu um erro ao efetuar seu login!");
+                response.sendRedirect("admin/events.jsp");
             }
-
         }
     }
 

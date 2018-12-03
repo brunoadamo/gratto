@@ -27,14 +27,21 @@ public class LogDAO {
      * @param codigo codigo da Instituicao a ser buscada
      * @return retorna a Instituicao preenchida
      */
-    public List<Log> localizar(String param, String field) {
+    public List<Log> localizar(String acao, String param, String data) {
 
         List<Log> list = new ArrayList<Log>();
 
-        String where = "WHERE TRUE";
+        String where = " WHERE TRUE";
+
         try {
-            if (!field.isEmpty()) {
-                where = " AND " + field + " = '" + param + "'";
+            if (!acao.equals("")) {
+                where += " AND acao = '" + acao + "'";
+            }
+            if (!param.equals("")) {
+                where += " AND parametros like '%" + param + "%'";
+            }
+            if (!data.equals("")) {
+                where += " AND Data_Hora = '" + data + "'";
             }
         } catch (Exception e) {
         }

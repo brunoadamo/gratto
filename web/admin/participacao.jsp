@@ -1,6 +1,5 @@
-<%@page import="model.Doacao"%>
-<%@page import="model.DoacaoDAO"%>
-<%@page import="model.InstituicaoDAO"%>
+<%@page import="model.Usuario"%>
+<%@page import="model.UsuarioDAO"%>
 <%@page import="java.util.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -15,22 +14,21 @@
 
         <div class="content-wrapper">
             <div class="container-fluid">
+
                 <!-- Breadcrumbs-->
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item active">Minhas Doações</li>
+                    <li class="breadcrumb-item active">Instituições</li>
                 </ol>
 
                 <%
 
                 String cod_usuario = session.getAttribute("usuarioID").toString();
 
-                DoacaoDAO dDAO = new DoacaoDAO();
+                UsuarioDAO iDAO = new UsuarioDAO();
 
-                InstituicaoDAO iDAO = new InstituicaoDAO();
+                List<Usuario> listUsuario = iDAO.listaEvento(request.getParameter("id"));
 
-                List<Doacao> listDoacao = dDAO.localizar(cod_usuario);
-
-                request.setAttribute("listDoacao",listDoacao);
+                request.setAttribute("listUsuario",listUsuario);
 
                 %>
 
@@ -38,32 +36,31 @@
                 <!-- Example DataTables Card-->
                 <div class="card mb-3">
                     <div class="card-header">
-                        <i class="fa fa-table"></i> Doações</div>
+                        <i class="fa fa-table"></i> Participações evento!</div>
                     <div class="card-body">
                         <div class="table-responsive">
                             <table class="table table-bordered" cellspacing="0">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
-                                        <th>Data</th>
-                                        <th>Valor</th>
-                                        <th>Instituição</th>
+                                        <th>Nome</th>
+                                        <th>E-mail</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <% //INICIO DA LISTAGEM DE INSTITUIÇÕES %>
-                                    <c:forEach items="${listDoacao}" var="i">
+                                    <c:forEach items="${listUsuario}" var="i">
 
                                         <tr>
-                                            <td>${i.getCodigo()}</td>
-                                            <td>${i.getData()}</td>
-                                            <td>${i.getValor()}</td>
-                                            <td>${i.getCod_inst()}</td>
+                                            <td>${i.getNomeUsuario()}</td>
+                                            <td>${i.getEmailUsuario()}</td>
+
+
                                         </tr>
                                     </c:forEach>
                                 </tbody>
                             </table>
                         </div>
+
                     </div>
                 </div>
             </div>

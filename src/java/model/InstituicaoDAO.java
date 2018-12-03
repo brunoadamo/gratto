@@ -28,7 +28,7 @@ public class InstituicaoDAO {
     public boolean gravar(Instituicao instituicao) {
 
         String sql = "INSERT INTO Instituicao(Razao_Social,Nome_Fantasia,CNPJ,Endereco,Numero,Bairro,	Cidade,	Estado,	Pais,CEP,Telefone,Email,Site,Facebook,Status,Ativo,Responsavel,Categoria,descricao,img) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        
+
         try {
 
             bd.getConnection();
@@ -180,20 +180,20 @@ public class InstituicaoDAO {
             bd.close();
         }
     }
-    
+
     public List<Instituicao> relatorio(String codigo) {
-        
+
         List<Instituicao> list = new ArrayList<Instituicao>();
 
         String sql = "SELECT SUM(valor) as doacoes, month(data) as mes_doacao FROM doacao WHERE Cod_Inst = " + codigo + " group by month(data);";
-        
+
         System.out.println(sql);
-        
+
         try {
             bd.getConnection();
-            bd.st = bd.con.prepareStatement(sql);            
+            bd.st = bd.con.prepareStatement(sql);
             bd.rs = bd.st.executeQuery();
-            
+
             while (bd.rs.next()) {
                 Instituicao i = new Instituicao();
 
@@ -201,14 +201,13 @@ public class InstituicaoDAO {
                 i.setImg(bd.rs.getInt("mes_doacao"));
                 //bd.st.setBoolean(17, instituicao.instIsActive());
                 list.add(i);
-                
-            } 
+
+            }
         } catch (SQLException erro) {
             System.out.println("Erro: " + erro.toString());
         }
-        return list;    
+        return list;
     }
-    
 
     /**
      * Localiza uma Instituicao utilizando o nome Fantasia da Instituicao
@@ -229,9 +228,9 @@ public class InstituicaoDAO {
             }
         } catch (Exception e) {
         }
-        
+
         String sql = "SELECT * FROM Instituicao WHERE Nome_Fantasia LIKE '%" + nomeFantasia + "%'" + where;
-        
+
         System.out.println(sql);
 
         try {
@@ -241,7 +240,7 @@ public class InstituicaoDAO {
 
             while (bd.rs.next()) {
                 Instituicao i = new Instituicao();
-                
+
                 i.setIdInstituicao(bd.rs.getInt("Codigo"));
                 i.setRazaoSocial(bd.rs.getString("Razao_Social"));
                 i.setNomeFantasia(bd.rs.getString("Nome_Fantasia"));
@@ -308,14 +307,13 @@ public class InstituicaoDAO {
         }
         return list;
     }
-    
+
     public List<Instituicao> listaCod(String codigo) {
 
         List<Instituicao> list = new ArrayList<Instituicao>();
 
         String sql = "SELECT * FROM instituicao WHERE responsavel = '" + codigo + "'";
         System.out.println(sql);
-        
 
         try {
             bd.getConnection();
@@ -350,14 +348,14 @@ public class InstituicaoDAO {
         }
         return list;
     }
+
     public String localizaNome(String codigo) {
 
         List<Instituicao> list = new ArrayList<Instituicao>();
 
         String sql = "SELECT nome_fantasia FROM instituicao WHERE codigo = '" + codigo + "'";
-        
+
         String nome_fantasia = "";
-        
 
         try {
             bd.getConnection();

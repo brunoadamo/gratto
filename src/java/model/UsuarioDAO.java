@@ -6,6 +6,7 @@ package model;
  */
 import service.BD;
 import java.sql.SQLException;
+import java.util.List;
 
 public class UsuarioDAO {
 
@@ -26,7 +27,7 @@ public class UsuarioDAO {
     public boolean gravar(Usuario usuario) {
 
         String sql = "INSERT INTO usuario (Nome,Sexo,Cidade,Estado,Telefone,Email,Senha,Ativo) VALUES (?,?,?,?,?,?,?,?)";
-        
+
         System.out.println(sql);
 
         try {
@@ -198,19 +199,43 @@ public class UsuarioDAO {
         }
     }
 
+    public List<Usuario> listaEvento(String codigo) {
+
+        List<Usuario> list = new java.util.ArrayList<Usuario>();
+
+        String sql = "SELECT usuario.Nome, email FROM evento, participacao, usuario WHERE participacao.cod_evento = '" + codigo + "' AND participacao.cod_evento = evento.codigo AND participacao.cod_usuario = usuario.codigo GROUP BY email";
+
+        try {
+            bd.getConnection();
+            bd.st = bd.con.prepareStatement(sql);
+            bd.rs = bd.st.executeQuery();
+
+            while (bd.rs.next()) {
+                Usuario i = new Usuario();
+
+                i.setNomeUsuario(bd.rs.getString("Nome"));
+                i.setEmailUsuario(bd.rs.getString("Email"));
+                list.add(i);
+            }
+        } catch (SQLException erro) {
+            System.out.println("Erro: " + erro.toString());
+        }
+        return list;
+    }
+
     public boolean login() {
         String sql = "SELECT * FROM usuario WHERE Email = ? AND Senha = ?";
         try {
             bd.getConnection();
             bd.st = bd.con.prepareStatement(sql);
-            
+
             bd.st.setString(1, usuario.getEmailUsuario());
             bd.st.setString(2, usuario.getSenha());
-            
+
             bd.rs = bd.st.executeQuery();
-            
+
             if (bd.rs.next()) {
-                
+
                 usuario.setIdUsuario(bd.rs.getInt("Codigo"));
                 usuario.setNomeUsuario(bd.rs.getString("Nome"));
                 usuario.setEmailUsuario(bd.rs.getString("Email"));
@@ -221,7 +246,7 @@ public class UsuarioDAO {
                 usuario.setEstadoUsuario(bd.rs.getString("Estado"));
                 usuario.setDataCriacaoUsuario(bd.rs.getString("Data_Criacao"));
                 usuario.setUserActive(bd.rs.getBoolean("Ativo"));
-                
+
                 return true;
             }
         } catch (SQLException erro) {

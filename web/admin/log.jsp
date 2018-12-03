@@ -23,16 +23,75 @@
                 <%
 
                 String cod_usuario = session.getAttribute("usuarioID").toString();
-
                 LogDAO iDAO = new LogDAO();
-
                 List<Log> listLog = iDAO.listaTodos();
+                String acao     = "";
+                String param    = "";
+                String data     = "";
+
+
+                try{
+                    acao = request.getParameter("acao");
+                    param = request.getParameter("param");
+                    data = request.getParameter("data");
+                }catch (Exception e){
+
+                }
+
+                System.out.println(acao);
+                System.out.println(acao);
+                System.out.println(acao);
+
+                if(acao != null || param != null || data != null){
+                    listLog = iDAO.localizar(acao,param,data);
+                }
 
                 request.setAttribute("listLog",listLog);
 
                 %>
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <i class="fa fa-search"></i> Pesquisa
+                        <br>
+                    </div>
+                    <div class="card-body">
+                        <form action="log.jsp" method="POST">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <select name="acao" class="form-control">
+                                            <option value="" selected disabled>Ação</option>
+                                            <option value="insert">Insert</option>
+                                            <option value="update">Update</option>
+                                            <option value="delete">Delete</option>
 
+                                        </select>
 
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <input type="hidden" name="param" value="" id="search_param">
+                                        <input type="text" class="form-control" name="nome_fantasia" placeholder="Busca...">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input type="hidden" name="data" value="" id="search_param">
+                                        <input type="text" class="form-control" name="nome_fantasia" placeholder="Data">
+                                    </div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <div class="col-lg-12 text-center">
+                                    <div id="success"></div>
+                                    <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Pesquisar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
                 <!-- Example DataTables Card-->
                 <div class="card mb-3">
                     <div class="card-header">
@@ -43,7 +102,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Usuário</th>
+                                        <th>ID Usuário</th>
                                         <th>Horário</th>
                                         <th>Módulo</th>
                                         <th>Ações</th>

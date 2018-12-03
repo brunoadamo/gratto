@@ -7,18 +7,22 @@ package controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.time.Clock;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import model.UsuarioDAO;
+import model.ParticipacaoDAO;
+import model.Participacao;
 
 /**
  *
  * @author Bruno
  */
-public class Login extends HttpServlet {
+public class ParticipaEvento extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -31,37 +35,41 @@ public class Login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
         response.setContentType("text/html;charset=UTF-8");
-
         try (PrintWriter out = response.getWriter()) {
-            String email = request.getParameter("email_user");
-            String senha = request.getParameter("pass_user");
+            HttpSession session = request.getSession();
+            int id_evento = 0;
+            int id_instituicao = 0;
+            int id_usuario = 0;
 
-            UsuarioDAO usuarioDAO = new UsuarioDAO();
-            if (!usuarioDAO.bd.getConnection()) {
-                out.println("Falha na conexão com o Banco de Dados.");
+            id_evento = Integer.parseInt(request.getParameter("id_evento"));
+            id_instituicao = Integer.parseInt(request.getParameter("id_instituicao"));
+
+            try {
+
+                id_usuario = Integer.parseInt(request.getParameter("id_usuario"));
+            } catch (NumberFormatException e) {
+
+            }
+            Date d = new Date();
+            String data = java.text.DateFormat.getDateInstance(DateFormat.MEDIUM).format(d);
+            Participacao participa = new Participacao();
+            ParticipacaoDAO participacaoDAO = new ParticipacaoDAO();
+            if (!participacaoDAO.bd.getConnection()) {
+                System.out.println("Falha na conexão com o Banco de Dados.");
                 System.exit(0);
             }
 
-            usuarioDAO.usuario.setEmailUsuario(email);
-            usuarioDAO.usuario.setSenha(senha);
+            participa.setCod_usuario(id_usuario);
+            participa.setDataInsc(data);
+            participa.setCod_evento(id_instituicao);
+            participa.setCod_instituicao(id_evento);
 
-            HttpSession session = request.getSession();
-
-            session.setAttribute("usuarioNome", "");
-            session.setAttribute("usuarioID", "");
-
-            if (usuarioDAO.login() == true) {
-
-                session.setAttribute("usuarioNome", usuarioDAO.usuario.getNomeUsuario());
-                session.setAttribute("usuarioID", usuarioDAO.usuario.getIdUsuario());
-                response.sendRedirect("index.jsp");
+            if (participacaoDAO.gravar(participa)) {
+                response.sendRedirect("thanks.jsp?msg=Obrigado por participar!");
             } else {
-                session.setAttribute("userLogin", "false");
-                response.sendRedirect("thanks.jsp?msg=Ocorreu um erro ao efetuar seu login!");
+                response.sendRedirect("thanks.jsp?msg=Ops! Não foi possivel completar a solicitação!");
             }
-
         }
     }
 

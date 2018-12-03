@@ -4,8 +4,9 @@
  * and open the template in the editor.
  */
 package model;
+
 public class Evento {
-    
+
     private int idEvento;
     private String nome;
     private String desc;
@@ -13,12 +14,15 @@ public class Evento {
     private String dataFim;
     private String horaIni;
     private String horaFim;
+    private int ativo;
     private int limit;
+    private int cod_inst;
+    private int cod_usuario;
 
     public Evento() {
     }
 
-    public Evento(int idEvento, String nome, String desc, String dataIni, String dataFim, String horaIni, String horaFim, int limit) {
+    public Evento(int idEvento, String nome, String desc, String dataIni, String dataFim, String horaIni, String horaFim, int limit, int cod_inst, int ativo, int cod_usuario) {
         this.idEvento = idEvento;
         this.nome = nome;
         this.desc = desc;
@@ -26,9 +30,19 @@ public class Evento {
         this.dataFim = dataFim;
         this.horaIni = horaIni;
         this.horaFim = horaFim;
+        this.cod_inst = cod_inst;
         this.limit = limit;
+        this.ativo = ativo;
+        this.ativo = cod_usuario;
     }
-    
+
+    public int getCod_usuario() {
+        return cod_usuario;
+    }
+
+    public void setCod_usuario(int cod_usuario) {
+        this.cod_usuario = cod_usuario;
+    }
 
     public int getIdEvento() {
         return idEvento;
@@ -93,6 +107,21 @@ public class Evento {
     public void setLimit(int limit) {
         this.limit = limit;
     }
-    
+
+    public int getCod_inst() {
+        return cod_inst;
+    }
+
+    public void setCod_inst(int cod_inst) {
+        this.cod_inst = cod_inst;
+    }
+
+    public int getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(int ativo) {
+        this.ativo = ativo;
+    }
 
 }

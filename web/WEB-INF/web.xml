@@ -40,6 +40,18 @@
         <servlet-name>AddUser</servlet-name>
         <servlet-class>controller.AddUser</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ParticipaEvento</servlet-name>
+        <servlet-class>controller.ParticipaEvento</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteParticipacao</servlet-name>
+        <servlet-class>controller.DeleteParticipacao</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>DeleteEvent</servlet-name>
+        <servlet-class>controller.DeleteEvent</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>Login</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -79,6 +91,18 @@
     <servlet-mapping>
         <servlet-name>AddUser</servlet-name>
         <url-pattern>/AddUser</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ParticipaEvento</servlet-name>
+        <url-pattern>/ParticipaEvento</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteParticipacao</servlet-name>
+        <url-pattern>/DeleteParticipacao</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>DeleteEvent</servlet-name>
+        <url-pattern>/DeleteEvent</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
