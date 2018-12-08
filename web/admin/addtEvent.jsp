@@ -1,6 +1,7 @@
 <%@page import="model.Instituicao"%>
 <%@page import="model.InstituicaoDAO"%>
 <%@page import="java.util.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -12,6 +13,12 @@
         <%
 
         String cod_usuario = session.getAttribute("usuarioID").toString();
+
+        InstituicaoDAO iDAO = new InstituicaoDAO();
+
+        List<Instituicao> listInstituicao = iDAO.listaCod(cod_usuario);
+
+        request.setAttribute("listInstituicao",listInstituicao);
 
         %>
 
@@ -59,6 +66,14 @@
                         <div class="form-group col-md-6">
                             <label for="telefone">*Limite participante</label>
                             <input type="int" class="form-control" name="limit" id="telefone">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="telefone">*Instituição</label>
+                            <select class="form-control" name="id_inst">
+                                <c:forEach items="${listInstituicao}" var="i">
+                                    <option value="${i.getIdInstituicao()}">${i.getNomeFantasia()}</option>
+                                </c:forEach>
+                            </select>
                         </div>
                     </div>
 

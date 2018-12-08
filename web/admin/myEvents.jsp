@@ -58,7 +58,7 @@
                                             <td>${i.getDataIni()} às ${i.getHoraIni()}h</td>
                                             <td class="actions">
                                                 <!-- <a class="btn btn-success btn-xs" href="view.html">Visualizar</a> !-->
-                                                <a class="btn btn-danger btn-xs"  href="../myEvents?id=${i.getIdEvento()}">Cancelar Participacao</a>
+                                                <a class="btn btn-danger btn-xs"  href="../DeleteParticipacao?id=${i.getIdEvento()}">Cancelar Participacao</a>
                                             </td>
                                         </tr>
                                     </c:forEach>

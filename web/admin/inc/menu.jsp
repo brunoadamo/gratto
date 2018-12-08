@@ -20,13 +20,13 @@
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Meus Eventos">
                 <a class="nav-link" href="myEvents.jsp">
-                    <i class="fa fa-fw fa-area-chart"></i>
+                    <i class="fa fa-fw fa-address-book"></i>
                     <span class="nav-link-text">Minha Agenda</span>
                 </a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Doações">
                 <a class="nav-link" href="events.jsp">
-                    <i class="fa fa-fw fa-area-chart"></i>
+                    <i class="fa fa-fw fa-calendar"></i>
                     <span class="nav-link-text">Eventos</span>
                 </a>
             </li>
@@ -40,7 +40,7 @@
             %>
             <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Log">
                 <a class="nav-link" href="log.jsp">
-                    <i class="fa fa-fw fa-area-chart"></i>
+                    <i class="fa fa-fw fa-hourglass-half"></i>
                     <span class="nav-link-text">Logs</span>
                 </a>
             </li>

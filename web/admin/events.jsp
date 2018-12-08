@@ -69,7 +69,7 @@
                                 </tbody>
                             </table>
                         </div>
-                        <a class="btn btn-primary btn-xs" href="addtEvent.jsp?usuario="<%=cod_usuario %> >Nova</a>
+                        <a class="btn btn-primary btn-xs" href="addtEvent.jsp?usuario="<%=cod_usuario%>> Novo</a>
                     </div>
                 </div>
             </div>

@@ -53,7 +53,7 @@
             <c:forEach items="${listInstituicao}" var="i">
                 <%
                     int count_limit = 999999;
-                    if (pageName.isEmpty()) {
+                    if (pageName.isEmpty() || pageName.equals("index.jsp")) {
                         count_limit = 2;
                     }
                     if (count <= count_limit) {

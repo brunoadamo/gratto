@@ -46,9 +46,9 @@ public class DeleteParticipacao extends HttpServlet {
 
             if (participacaoDAO.excluir(codigo)) {
 
-                response.sendRedirect("admin/events.jsp");
+                response.sendRedirect("admin/myEvents.jsp");
             } else {
-                response.sendRedirect("admin/events.jsp");
+                response.sendRedirect("admin/myEvents.jsp");
             }
         }
     }
